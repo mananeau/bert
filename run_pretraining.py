@@ -414,6 +414,9 @@ def main(_):
   tf.gfile.MakeDirs(FLAGS.output_dir)
 
   input_files = []
+  if FLAGS.input_dir_glob:
+    FLAGS.input_file = tf.gfile.Glob(os.path.join(FLAGS.input_file,'*tfrecord'))
+
   for input_pattern in FLAGS.input_file.split(","):
     input_files.extend(tf.gfile.Glob(input_pattern))
 
