@@ -418,10 +418,10 @@ def main(_):
 
   input_files = []
   if FLAGS.input_dir_glob:
-    FLAGS.input_file = tf.gfile.Glob(os.path.join(FLAGS.input_file,'*tfrecord'))
-    FLAGS.input_file = str(FLAGS.input_file).replace("[","").replace("]","")
-  for input_pattern in FLAGS.input_file.split(","):
-    input_files.extend(tf.gfile.Glob(input_pattern))
+    input_files = tf.gfile.Glob(os.path.join(FLAGS.input_file,'*tfrecord'))
+  else:
+    for input_pattern in FLAGS.input_file.split(","):
+        input_files.extend(tf.gfile.Glob(input_pattern))
 
   tf.logging.info("*** Input Files ***")
   for input_file in input_files:
