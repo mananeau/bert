@@ -42,6 +42,9 @@ flags.DEFINE_string(
     "The output directory where the model checkpoints will be written.")
 
 ## Other parameters
+flags.DEFINE_bool("input_dir_glob", False, "Whether to look for tfrecord files in directory input_file and glob them.")
+
+
 flags.DEFINE_string(
     "init_checkpoint", None,
     "Initial checkpoint (usually from a pre-trained BERT model).")
