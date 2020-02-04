@@ -328,7 +328,6 @@ def get_assignment_map_from_checkpoint(tvars, init_checkpoint):
     name_to_variable[name] = var
 
   init_vars = tf.train.list_variables(init_checkpoint)
-  init_vars = list(filter(lambda x: "bert/embeddings/word_embeddings" not in x[0] and "cls/predictions/output_bias" not in x[0], init_vars))
 
   assignment_map = collections.OrderedDict()
   for x in init_vars:
