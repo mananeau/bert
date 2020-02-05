@@ -328,8 +328,10 @@ def get_assignment_map_from_checkpoint(tvars, init_checkpoint, different_vocabul
     name_to_variable[name] = var
 
   init_vars = tf.train.list_variables(init_checkpoint)
+  print("List of vars before:", init_vars)
   if different_vocabulary:
       init_vars = list(filter(lambda x: "bert/embeddings/word_embeddings" not in x[0] and "cls/predictions/output_bias" not in x[0], init_vars))
+  print("List of vars after", init_vars)
   assignment_map = collections.OrderedDict()
   for x in init_vars:
     (name, var) = (x[0], x[1])
