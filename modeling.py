@@ -314,7 +314,7 @@ def get_activation(activation_string):
     raise ValueError("Unsupported activation: %s" % act)
 
 
-def get_assignment_map_from_checkpoint(tvars, init_checkpoint):
+def get_assignment_map_from_checkpoint(tvars, init_checkpoint, different_vocabulary):
   """Compute the union of the current variables and checkpoint variables."""
   assignment_map = {}
   initialized_variable_names = {}
@@ -328,7 +328,8 @@ def get_assignment_map_from_checkpoint(tvars, init_checkpoint):
     name_to_variable[name] = var
 
   init_vars = tf.train.list_variables(init_checkpoint)
-
+  if different_vocabulary:
+      init_vars = list(filter(lambda x: "bert/embeddings/word_embeddings" not in x[0] and "cls/predictions/output_bias" not in x[0], init_vars))
   assignment_map = collections.OrderedDict()
   for x in init_vars:
     (name, var) = (x[0], x[1])
