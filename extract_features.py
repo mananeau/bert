@@ -172,7 +172,7 @@ def model_fn_builder(bert_config, init_checkpoint, layer_indexes, use_tpu,
     scaffold_fn = None
     (assignment_map,
      initialized_variable_names) = modeling.get_assignment_map_from_checkpoint(
-         tvars, init_checkpoint)
+         tvars, init_checkpoint, different_vocabulary=False)
     if use_tpu:
 
       def tpu_scaffold():

@@ -49,6 +49,10 @@ flags.DEFINE_string(
     "init_checkpoint", None,
     "Initial checkpoint (usually from a pre-trained BERT model).")
 
+flags.DEFINE_bool(
+    "different_vocabulary", False,
+    "Use if init_checkpoint=True and vocabulary used is different from init_checkpoint")
+
 flags.DEFINE_integer(
     "max_seq_length", 128,
     "The maximum total input sequence length after WordPiece tokenization. "
@@ -109,7 +113,7 @@ flags.DEFINE_integer(
     "Only used if `use_tpu` is True. Total number of TPU cores to use.")
 
 
-def model_fn_builder(bert_config, init_checkpoint, learning_rate,
+def model_fn_builder(bert_config, init_checkpoint, different_vocabulary, learning_rate,
                      num_train_steps, num_warmup_steps, use_tpu,
                      use_one_hot_embeddings):
   """Returns `model_fn` closure for TPUEstimator."""
@@ -156,7 +160,7 @@ def model_fn_builder(bert_config, init_checkpoint, learning_rate,
     scaffold_fn = None
     if init_checkpoint:
       (assignment_map, initialized_variable_names
-      ) = modeling.get_assignment_map_from_checkpoint(tvars, init_checkpoint)
+      ) = modeling.get_assignment_map_from_checkpoint(tvars, init_checkpoint, different_vocabulary)
       if use_tpu:
 
         def tpu_scaffold():
@@ -446,6 +450,7 @@ def main(_):
   model_fn = model_fn_builder(
       bert_config=bert_config,
       init_checkpoint=FLAGS.init_checkpoint,
+      different_vocabulary=FLAGS.different_vocabulary,
       learning_rate=FLAGS.learning_rate,
       num_train_steps=FLAGS.num_train_steps,
       num_warmup_steps=FLAGS.num_warmup_steps,
