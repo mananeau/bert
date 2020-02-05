@@ -181,6 +181,7 @@ def model_fn_builder(bert_config, init_checkpoint, different_vocabulary, learnin
 
     output_spec = None
     if mode == tf.estimator.ModeKeys.TRAIN:
+      print("Creating optimizer")
       train_op = optimization.create_optimizer(
           total_loss, learning_rate, num_train_steps, num_warmup_steps, use_tpu)
 
