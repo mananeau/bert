@@ -111,7 +111,7 @@ class AdamWeightDecayOptimizer(tf.train.Optimizer):
     for (grad, param) in grads_and_vars:
       if grad is None or param is None:
         continue
-
+      print(grad, param)
       param_name = self._get_variable_name(param.name)
 
       m = tf.get_variable(
