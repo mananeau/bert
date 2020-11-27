@@ -127,7 +127,7 @@ def write_instance_to_example_files(instances, tokenizer, max_seq_length,
       masked_lm_ids.append(0)
       masked_lm_weights.append(0.0)
 
-    next_sentence_label = 1 if instance.is_random_next else 0
+    #next_sentence_label = 1 if instance.is_random_next else 0
 
     features = collections.OrderedDict()
     features["input_ids"] = create_int_feature(input_ids)
@@ -136,7 +136,7 @@ def write_instance_to_example_files(instances, tokenizer, max_seq_length,
     features["masked_lm_positions"] = create_int_feature(masked_lm_positions)
     features["masked_lm_ids"] = create_int_feature(masked_lm_ids)
     features["masked_lm_weights"] = create_float_feature(masked_lm_weights)
-    features["next_sentence_labels"] = create_int_feature([next_sentence_label])
+    #features["next_sentence_labels"] = create_int_feature([next_sentence_label])
 
     tf_example = tf.train.Example(features=tf.train.Features(feature=features))
 
